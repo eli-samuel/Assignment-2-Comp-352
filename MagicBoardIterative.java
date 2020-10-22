@@ -1,8 +1,11 @@
 import java.util.Random;
 import java.util.Scanner;
 import java.io.IOException;
+import java.util.Stack;
+import java.util.Arrays;
 
-public class MagicBoard {
+public class MagicBoardIterative {
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
@@ -13,6 +16,7 @@ public class MagicBoard {
             System.out.print("Size out of bounds. Please input a number between 5 and 20: ");
             D = in.nextInt();
         }
+
 
         System.out.println("Size is " + D + " x " + D + " (press PERIOD to continue)");
         in.next();
@@ -78,8 +82,6 @@ public class MagicBoard {
         }
         if (!hasZero) board[D-2][D-2] = 0;
 
-
-
         boolean[][] check = new boolean[D][D];
         for (int i=0; i<check.length; i++) {
             for (int j=0; j<check.length; j++) {
@@ -89,106 +91,72 @@ public class MagicBoard {
 
         check[pos[0]][pos[1]] = true;
 
-
         System.out.println("Here is your board:\n\n" + printBoard(pos, board));
-        System.out.println("Are you ready to clear screen and begin? (PERIOD to continue)");
+        System.out.println("Are you ready to begin? (PERIOD to continue)");
         in.next();
-        clearScreen();
 
         System.out.println(move(pos, board, check));
     }
 
     public static boolean move(int[] startPos, int[][] board, boolean[][] check) {
+        Stack<int[]> path = new Stack<int[]>();
+        path.push(startPos);
 
         int moveValue = board[startPos[0]][startPos[1]];
-        if (moveValue == 0) {
-            System.out.println(printBoard(startPos, board));
-            return true; // base case
-        }
 
-        // from startPos, move in a direction moveValue and keep going recursively
-        if (startPos[1] + moveValue < board.length) { // can move east
-            int[] pos = {startPos[0], startPos[1]+moveValue};
-            if (!check[pos[0]][pos[1]]) {
-                check[pos[0]][pos[1]] = true;
-                System.out.println(printBoard(startPos, board));
-                System.out.println("Attempting to move from (" + startPos[0] + ", " + startPos[1] + ") to (" + pos[0] + ", " + pos[1] + ").");
-                if (move(pos, board, check)) {
-                    return true;
-                }
-                else {
-                    System.out.println("Unable to move from (" + pos[0] + ", " + pos[1] + ").");
-                }
-            }
-            else {
-                System.out.println("There is no path east");
-                System.out.println("============================");
-            }
-        }
+        while (!path.isEmpty()) {
 
-        if (startPos[0] + moveValue < board.length) { // can move south
-            int[] pos = {startPos[0]+moveValue, startPos[1]};
-            if (!check[pos[0]][pos[1]]) {
-                check[pos[0]][pos[1]] = true;
-                System.out.println(printBoard(startPos, board));
-                System.out.println("Attempting to move from (" + startPos[0] + ", " + startPos[1] + ") to (" + pos[0] + ", " + pos[1] + ").");
-                if (move(pos, board, check)) {
-                    return true;
-                }
-                else {
-                    System.out.println("Unable to move from (" + pos[0] + ", " + pos[1] + ").");
-                }
-            }
-            else {
-                System.out.println("There is no path south");
-                System.out.println("============================");
-            }
-        }
+            System.out.println(Arrays.deepToString(path.toArray()));
 
-        if (startPos[1] - moveValue < board.length && startPos[1] - moveValue >= 0) { // can move west
-            int[] pos = {startPos[0], startPos[1]-moveValue};
-            if (!check[pos[0]][pos[1]]) {
-                check[pos[0]][pos[1]] = true;
-                System.out.println(printBoard(startPos, board));
-                System.out.println("Attempting to move from (" + startPos[0] + ", " + startPos[1] + ") to (" + pos[0] + ", " + pos[1] + ").");
-                if (move(pos, board, check)) {
-                    return true;
-                }
-                else {
-                    System.out.println("Unable to move from (" + pos[0] + ", " + pos[1] + ").");
-                }
-            }
-            else {
-                System.out.println("There is no path west");
-                System.out.println("============================");
-            }
-        }
+            moveValue = board[path.peek()[0]][path.peek()[1]];
 
-        if (startPos[0] - moveValue < board.length && startPos[0] - moveValue >= 0) { // can move north
-            int[] pos = {startPos[0]-moveValue, startPos[1]};
-            if (!check[pos[0]][pos[1]]) {
-                check[pos[0]][pos[1]] = true;
-                System.out.println(printBoard(startPos, board));
-                System.out.println("Attempting to move from (" + startPos[0] + ", " + startPos[1] + ") to (" + pos[0] + ", " + pos[1] + ").");
-                if (move(pos, board, check)) {
-                    return true;
-                }
-                else {
-                    System.out.println("Unable to move from (" + pos[0] + ", " + pos[1] + ").");
-                }
+            if (moveValue == 0) {
+                System.out.println("\n\n" + printBoard(path.peek(), board));
+                return true;
             }
-            else {
-                System.out.println("There is no path north");
-                if (!check[pos[0]][pos[1]]) System.out.println("Already been to this area.");
-                System.out.println("============================");
-            }
-        }
 
-        check[startPos[0]][startPos[1]] = false;
-        System.out.println(printBoard(startPos, board));
+            if (path.peek()[1] + moveValue < board.length) { // can move east
+                int[] pos = {path.peek()[0], path.peek()[1]+moveValue};
+                if (!check[pos[0]][pos[1]]) {
+                    check[pos[0]][pos[1]] = true;
+                    path.push(pos);
+                    continue;
+                }
+            }
+
+            if (path.peek()[0] + moveValue < board.length) { // can move south
+                int[] pos = {path.peek()[0]+moveValue, path.peek()[1]};
+                if (!check[pos[0]][pos[1]]) {
+                    check[pos[0]][pos[1]] = true;
+                    path.push(pos);
+                    continue;
+                }
+            }
+
+            if (path.peek()[1] - moveValue >= 0) { // can move west
+                int[] pos = {path.peek()[0], path.peek()[1]-moveValue};
+                if (!check[pos[0]][pos[1]]) {
+                    check[pos[0]][pos[1]] = true;
+                    path.push(pos);
+                    continue;
+                }
+            }
+
+            if (path.peek()[0] - moveValue >= 0) { // can move north
+                int[] pos = {path.peek()[0]-moveValue, path.peek()[1]};
+                if (!check[pos[0]][pos[1]]) {
+                    check[pos[0]][pos[1]] = true;
+                    path.push(pos);
+                    continue;
+                }
+            }
+
+            int[] popped = path.pop();
+        }
         return false;
-
     }
+
+
 
     private static String printBoard(int[] pos, int[][] arr) {
         String s = "";
