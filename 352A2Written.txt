@@ -1,0 +1,138 @@
+1. a)
+ done ← true                1
+ j ← 0                      1
+ while j ≤ n - 2 do         n-2
+ if A[j] > A[j + 1] then
+ swap(A[j], A[j + 1])
+ done:= false
+ j ← j + 1
+ end while
+ j ← n - 1                  1
+ while j ≥ 1 do             n-2
+ if A[j] < A[j - 1] then
+ swap(A[j - 1], A[j])
+ done:= false
+ j ← j - 1
+ end while
+ if ¬ done                  1
+ MyMagic (A, n)             n
+ else
+ return A
+
+First while loop: j=0 to j=n-2 --> n-1 times
+Second wihle loop: j=n-1 to j=1 --> n-1 times
+
+Time complexity of both while loops = O(n)
+Total complexity of while loops: O(n) + O(n) = O(n)
+
+Since the smallest time complexity for the loops also depends on n:
+Ω(n) + Ω(n) = Ω(n)
+
+For the recursion: the worst case is if all the elements are sorted in 
+descending order. If there are n elements, then the amount of times that
+MyMagic() gets executed is floor(n/2) times.
+
+f(n) = n/2 --> g(n) = n --> O(n)
+
+The best case in recursion is if the array is already sorted, therefore it
+will only have to go through the method once. --> Ω(1)
+
+O(n) * O(n) = O(n^2)
+Ω(n) * Ω(1) = Ω(n)
+
+
+f(n) = 2n^2
+O(g(n)) = O(n^2)
+
+
+b)
+[9, 3, 11, 5, 2]
+first recursion:
+    first while loop:
+        [3, 9, 11, 5, 2]
+        [3, 9, 5, 11, 2]
+        [3, 9, 5, 2, 11]
+    second while loop:
+        [3, 9, 2, 5, 11]
+        [3, 2, 9, 5, 11]
+        [2, 3, 9, 5, 11]
+second recursion:
+    first while loop:
+        [2, 3, 5, 9, 11]
+
+output: [2, 3, 5, 9, 11]
+
+
+c) MyMagic modifies and sorts a given array in increasing order.
+In the first while loop, the algorithm looks from left to right and swaps
+numbers if the left number is greater than the right. In the second while
+loop, the algorithm looks from right to left and swaps numbers if the
+right number is smaller than the left. After it goes through both while
+loops, if the array is still not sorted, the method calls itself recursively
+until it is sorted.
+
+d) Since this method is tail recursive, it can be converted to a while loop.
+This saves on some resources, however, this does not improve runtime as 2 
+nested while loops is O(n^2) time complexity.
+
+e) This is tail recursion as the recursive call to the method occurs in the
+last step.
+
+
+
+2.
+
+i) f(n) = 10^5 n log n + n^3, g(n) = log n
+f(n) = Ω(g(n)) because f(n) = O(n^3) and n^3 is an upper bound to log n
+
+ii) f(n) = 2log n^2, g(n) = (log n)^2
+f(n) = O(g(n)) because f(n) = 4log n = O(log n) as we can ignore the 
+constants and log n is a lower bound to (log n)^2 after n = 10
+
+iii) f(n) = log n^2 + n^3, g(n) = log n + 5
+f(n) = Ω(g(n)) because f(n) = 2log n + n^3 = O(n^3) and n^3 is an upper
+bound to log n + 5
+
+iv) f(n) = n sqrt(n) + log n, g(n) = log n^2
+f(n) = Ω(g(n)) because f(n) = n sqrt(n) + log n = O(n^(3/2)) and n^(3/2) is
+an upper bound to log n^2
+
+v) f(n) = 2^n + 10^n, g(n) = 10n^2
+f(n) = Ω(g(n)) because f(n) = 2^n + 10^n = O(2^n) and 2^n is an upper
+bound to 10n^2 after n = 10
+
+vi) f(n) = n!, g(n) = n^n
+f(n) = O(g(n)) because n! is a lower bound to n^n after n = 1
+
+vii) f(n) = log^2 n, g(n) = log n
+f(n) = Ω(g(n)) because f(n) = log^2 n = O(log^2 n) and log^2 n is an upper
+bound to log n after n = 10
+
+viii) f(n) = n, g(n) = log^2 n
+f(n) = Ω(g(n)) because f(n) = O(n) and n is an upper bound to log^2 n after
+n = 1
+
+ix) f(n) = sqrt(n), g(n) = log n
+f(n) = Ω(g(n)) because f(n) = O(n^(1/2)) and n^(1/2) is an upper bound to 
+log n
+
+x) f(n) = 2^n, g(n) = 3^n
+f(n) = O(g(n)) because 2^n is a lower bound to 3^n
+
+xi) f(n) = 2^n, g(n) = n^n
+f(n) = O(g(n)) because f(n) = O(2^n) and 2^n is a lower bound to n^n
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
