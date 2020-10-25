@@ -91,9 +91,8 @@ public class MagicBoard {
 
 
         System.out.println("Here is your board:\n\n" + printBoard(pos, board));
-        System.out.println("Are you ready to clear screen and begin? (PERIOD to continue)");
+        System.out.println("Are you ready to begin? (PERIOD to continue)");
         in.next();
-        clearScreen();
 
         System.out.println(move(pos, board, check));
     }
@@ -191,23 +190,6 @@ public class MagicBoard {
     }
 
     private static String printBoard(int[] pos, int[][] arr) {
-        String s = "";
-
-        for (int i=0; i<arr.length; i++) {
-            for (int j=0; j<arr[i].length; j++) {
-                if (i == pos[0] && j == pos[1]) {
-                    s += ("|" + arr[i][j] + "| ");
-                }
-                else s += (" " + arr[i][j] + "  ");
-            }
-            s += ("\n");
-        }
-        s += ("============================");
-
-        return s;
-    }
-
-    private static String printBoard(int[] pos, boolean[][] arr) {
         String s = "";
 
         for (int i=0; i<arr.length; i++) {
