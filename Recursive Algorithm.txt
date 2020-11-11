@@ -1,0 +1,44 @@
+Algorithm move(startPos, board, check)
+
+    Input array pos of integers representing location
+    Input 2d array board of integers representing the board
+    Input 2d array check or booleans representing the locations visited on the board
+    Output boolean whether you can get to the end location
+
+    _Variables_
+    moveValue <- board[startPos[0]][startPos[1]]
+
+    if moveValue is 0 then do
+        print(board)
+        return true
+
+        if startPos[1] + moveValue is less than the length of board then do
+            pos <- {startPos[0], startPos[1]+moveValue}
+            if check[pos[0]][pos[1]] is not true then do
+                check[pos[0]][pos[1]] <- true
+                if move(pos, board, check) is true then do
+                    return true
+
+        if startPos[0] + moveValue is less than the length of board then do
+            pos <- {startPos[0]+moveValue, startPos[1]}
+            if check[pos[0]][pos[1]] is not true then do
+                check[pos[0]][pos[1]] <- true
+                if move(pos, board, check) is true then do
+                    return true
+
+        if startPos[1] - moveValue is less than the length of board then do
+            pos <- {startPos[0], startPos[1]-moveValue}
+            if check[pos[0]][pos[1]] is not true then do
+                check[pos[0]][pos[1]] <- true
+                if move(pos, board, check) is true then do
+                    return true
+
+        if startPos[0] - moveValue is less than the length of board then do
+            pos <- {startPos[0]-moveValue, startPos[1]}
+            if check[pos[0]][pos[1]] is not true then do
+                check[pos[0]][pos[1]] <- true
+                if move(pos, board, check) is true then do
+                    return true
+
+        print(board)
+        return false

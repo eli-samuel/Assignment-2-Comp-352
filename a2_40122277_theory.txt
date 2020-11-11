@@ -1,3 +1,6 @@
+Eli Samuel
+40122277
+
 1. a)
  done ← true                1
  j ← 0                      1
@@ -63,7 +66,7 @@ second recursion:
 output: [2, 3, 5, 9, 11]
 
 
-c) MyMagic modifies and sorts a given array in increasing order.
+c) MyMagic modifies and sorts a given array (A) in increasing order.
 In the first while loop, the algorithm looks from left to right and swaps
 numbers if the left number is greater than the right. In the second while
 loop, the algorithm looks from right to left and swaps numbers if the
